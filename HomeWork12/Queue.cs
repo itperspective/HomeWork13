@@ -11,7 +11,10 @@ namespace HomeWork13
         private int buffer = 10;
         DynamicArray<T> dynamicArray = new DynamicArray<T>();
 
-        public event ElementDelegateHendler ElementQueueEvent;
+        public event MyDelegateHendler EmptyBufferEvent;
+        public event MyDelegateHendler FullBufferEvent;
+        public event MyDelegateHendler RemoveElementEvent;
+        public event MyDelegateHendler AddElementEvent;
 
         
         public void Enqueue(T enqueue)
@@ -19,11 +22,13 @@ namespace HomeWork13
             try
             {
                 dynamicArray.Add(enqueue);
+                if (AddElementEvent != null)
+                    AddElementEvent(this, new ArrayEventArgs("Event Queue add element: " + enqueue));
 
                 if (dynamicArray.Top + 1 > buffer)
                 {
-                    if (ElementQueueEvent != null)
-                        ElementQueueEvent(this, new ArrayEventArgs("Queue buffer is Full!!"));
+                    if (FullBufferEvent != null)
+                        FullBufferEvent(this, new ArrayEventArgs("Queue buffer is Full!!"));
                 }
             }
             catch (FullBufferException ex)
@@ -40,12 +45,12 @@ namespace HomeWork13
             {
                 T a = dynamicArray.Get(0);
                 dynamicArray.Remove(0);
-                if (ElementQueueEvent != null)
-                    ElementQueueEvent(this, new ArrayEventArgs("Event Queue Remove Element" + a));
+                if (RemoveElementEvent != null)
+                    RemoveElementEvent(this, new ArrayEventArgs("Event Queue Remove Element" + a));
                 if (dynamicArray.Top == 0)
                 {
-                    if (ElementQueueEvent != null)
-                        ElementQueueEvent(this, new ArrayEventArgs("Event Queue buffer is empty"));
+                    if (EmptyBufferEvent != null)
+                        EmptyBufferEvent(this, new ArrayEventArgs("Event Queue buffer is empty"));
                 }
             }
             catch (EmptyBufferException ex)

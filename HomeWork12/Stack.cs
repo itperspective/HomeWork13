@@ -6,13 +6,16 @@ using System.Threading.Tasks;
 
 namespace HomeWork13
 {
-    public delegate void ElementDelegateHendler(object sender, ArrayEventArgs e);
+    public delegate void MyDelegateHendler(object sender, ArrayEventArgs e);
     class Stack<T>
     {
         private int buffer = 10;
         DynamicArray<T> dynamicArray = new DynamicArray<T>();
 
-        public event ElementDelegateHendler ElementStackEvent;
+        public event MyDelegateHendler EmptyBufferEvent;
+        public event MyDelegateHendler FullBufferEvent;
+        public event MyDelegateHendler RemoveElementEvent;
+        public event MyDelegateHendler AddElementEvent;
 
 
 
@@ -32,12 +35,12 @@ namespace HomeWork13
 
                 T a = dynamicArray.Get(dynamicArray.Top - 1);
                 dynamicArray.Remove(dynamicArray.Top - 1);
-                if (ElementStackEvent != null)
-                    ElementStackEvent(this, new ArrayEventArgs("Event Stack Remove Element:" + a));
+                if (RemoveElementEvent != null)
+                    RemoveElementEvent(this, new ArrayEventArgs("Event Stack Remove Element:" + a));
                 if (dynamicArray.Top == 0)
                 {
-                    if (ElementStackEvent != null)
-                        ElementStackEvent(this, new ArrayEventArgs("Event buffer is empty"));
+                    if (EmptyBufferEvent != null)
+                        EmptyBufferEvent(this, new ArrayEventArgs("Event buffer is empty"));
 
                 }
                 return a;
@@ -67,12 +70,12 @@ namespace HomeWork13
             try
             {
                 dynamicArray.Add(push);
-                if (ElementStackEvent != null)
-                    ElementStackEvent(this, new ArrayEventArgs("Event Push Element: " + push));
+                if (AddElementEvent != null)
+                    AddElementEvent(this, new ArrayEventArgs("Event Push Element: " + push));
                 if (dynamicArray.Top + 1 > buffer)
                 {
-                    if (ElementStackEvent != null)
-                        ElementStackEvent(this, new ArrayEventArgs("Event buffer is full!!!"));
+                    if (FullBufferEvent != null)
+                        FullBufferEvent(this, new ArrayEventArgs("Event buffer is full!!!"));
                 }
             }
 

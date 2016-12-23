@@ -20,8 +20,15 @@ namespace HomeWork13
             Queue<int> queue = new Queue<int>();
 
 
-            stack.ElementStackEvent += ShowMessage;
-            queue.ElementQueueEvent += ShowMessage;
+            stack.EmptyBufferEvent += ShowMessage;
+            stack.FullBufferEvent += ShowMessage;
+            stack.RemoveElementEvent += ShowMessage;
+            stack.AddElementEvent += ShowMessage;
+
+            queue.FullBufferEvent += ShowMessage;
+            queue.EmptyBufferEvent += ShowMessage;
+            queue.RemoveElementEvent += ShowMessage;
+            queue.AddElementEvent += ShowMessage;
 
             int input=0;
             int value;
