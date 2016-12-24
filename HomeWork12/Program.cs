@@ -56,18 +56,36 @@ namespace HomeWork13
                             value = Convert.ToInt32(Console.ReadLine());
                             stack.Push(value);
                         }
-                        catch (Exception ex)
+                        catch (FormatException ex)
+                        {
+                            Console.WriteLine(ex);
+                        }
+                        catch (FullBufferException ex)
                         {
                             Console.WriteLine(ex);
                         }
                         stack.Print();
                         break;
                     case 2:
-                        stack.Pop();
+                        try
+                        {
+                            stack.Pop();
+                        }
+                        catch (EmptyBufferException ex)
+                        {
+                            Console.WriteLine(ex);
+                        }
                         stack.Print();
                         break;
                     case 3:
-                        stack.Peek();
+                        try
+                        {
+                            stack.Peek();
+                        }
+                        catch (EmptyBufferException ex)
+                        {
+                            Console.WriteLine(ex);
+                        }
                         stack.Print();
                         break;
                     case 8:

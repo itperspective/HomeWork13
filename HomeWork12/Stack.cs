@@ -21,7 +21,11 @@ namespace HomeWork13
 
         public T Peek()
         {
-
+            if (dynamicArray.Top==0)
+            {
+                throw new EmptyBufferException();
+            }
+            else
             return dynamicArray.Get(dynamicArray.Top - 1);
         }
 
@@ -29,8 +33,11 @@ namespace HomeWork13
         public T Pop()
         {
 
-
-            try
+            if (dynamicArray.Top == 0)
+            {
+                throw new EmptyBufferException();
+            }
+            else
             {
 
                 T a = dynamicArray.Get(dynamicArray.Top - 1);
@@ -44,30 +51,19 @@ namespace HomeWork13
 
                 }
                 return a;
-
-
             }
 
-            catch (EmptyBufferException ex)
-            {
-                Console.WriteLine(ex);
-                return default(T);
-            }
 
-            catch (OutOfIndexException ex)
-            {
-                Console.WriteLine(ex);
-                return default(T);
-            }
         }
             
         
-  
-
-
         public void Push(T push)
         {
-            try
+            if (dynamicArray.Top + 1 > buffer)
+            {
+                throw new FullBufferException();
+            }
+            else
             {
                 dynamicArray.Add(push);
                 if (AddElementEvent != null)
@@ -78,12 +74,7 @@ namespace HomeWork13
                         FullBufferEvent(this, new ArrayEventArgs("Event buffer is full!!!"));
                 }
             }
-
-            catch (FullBufferException ex)
-            {
-                Console.WriteLine(ex);
-            }
-
+          
         }
 
         public void Print()

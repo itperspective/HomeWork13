@@ -6,14 +6,9 @@ using System.Threading.Tasks;
 
 namespace HomeWork13
 {
-    
+
     public class DynamicArray<T> : Dynamic<T>
     {
-        
-        
-
-        
-
         protected bool IndexOutOfRange(int index)
         {
             if (index > top)
@@ -24,14 +19,9 @@ namespace HomeWork13
             else { return false; }
 
         }
-        
-
-        
 
         protected bool IsEmpty()
         {
-
-
             if (top == 0)
             {
                 return true;
@@ -70,24 +60,14 @@ namespace HomeWork13
 
         public T Get(int index)
         {
-            if (top==0)
-            {
-                throw new EmptyBufferException();
-            }
-            else
-            {
-               
-                return array[index];
-            }
 
+            return array[index];
 
         }
 
         public void Add(T add)
         {
-            if (top +1 > buffer) { throw new FullBufferException(); }
-
-            else if (IsFull())
+            if (IsFull())
             {
                 Growth();
                 array[top] = add;
@@ -102,17 +82,7 @@ namespace HomeWork13
 
         public void Insert(T add, int index)
         {
-            if (IndexOutOfRange(index))
-            {
-                throw new OutOfIndexException();
-            }
-        
-
-            else if (top>buffer) { throw new FullBufferException(); }
-
-            else
-            {
-                if (IsFull())
+            if (IsFull())
                 {
                     Growth();
                     for (int i = top; i > index - 1; i--)
@@ -134,40 +104,21 @@ namespace HomeWork13
 
                     array[index] = add;
                     top = top + 1;
-
                 }
-            }
-
         }
 
-       
+
         public void Remove(int index)
         {
-            if (IndexOutOfRange(index))
-            {
-                throw new OutOfIndexException();
-            }
 
-            else
+            for (int i = index; i < array.Length - 1; i++)
             {
-                if (IsEmpty())
-                {
-                   throw new EmptyBufferException();
-                }
-                else
-                {
-                    //Console.WriteLine("Remove value [{0}] from stack", array[index]);
-                    for (int i = index; i < array.Length - 1; i++)
-                    {
-                        array[i] = array[i + 1];
-                    }
-                    top = top - 1;
-                    
-                }
+                array[i] = array[i + 1];
             }
+            top = top - 1;
 
         }
-    
+
 
         public void Print()
         {

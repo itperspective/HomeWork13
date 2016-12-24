@@ -19,7 +19,11 @@ namespace HomeWork13
         
         public void Enqueue(T enqueue)
         {
-            try
+            if (dynamicArray.Top + 1 > buffer)
+            {
+                throw new FullBufferException();
+            }
+            else
             {
                 dynamicArray.Add(enqueue);
                 if (AddElementEvent != null)
@@ -31,18 +35,19 @@ namespace HomeWork13
                         FullBufferEvent(this, new ArrayEventArgs("Queue buffer is Full!!"));
                 }
             }
-            catch (FullBufferException ex)
-            {
-                Console.WriteLine(ex);
-            }
-            
+           
         }
 
         
         public void Dequeue()
         {
-            try
+            if (dynamicArray.Top == 0)
             {
+                throw new EmptyBufferException();
+            }
+            else
+            {
+
                 T a = dynamicArray.Get(0);
                 dynamicArray.Remove(0);
                 if (RemoveElementEvent != null)
@@ -53,10 +58,7 @@ namespace HomeWork13
                         EmptyBufferEvent(this, new ArrayEventArgs("Event Queue buffer is empty"));
                 }
             }
-            catch (EmptyBufferException ex)
-            {
-                Console.WriteLine(ex);
-            }
+            
         }
 
         public void Print()
